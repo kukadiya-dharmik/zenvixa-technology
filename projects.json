@@ -1,0 +1,136 @@
+{
+    "projects": {
+        "1": {
+            "title": "E-Commerce Platform",
+            "description": "A comprehensive e-commerce solution designed to provide a seamless shopping experience. This platform features advanced product management, secure payment processing, real-time inventory tracking, and personalized user recommendations. Built with modern technologies to ensure scalability and performance.",
+            "techStack": ["React", "Node.js", "MongoDB", "Express", "Stripe API"],
+            "features": [
+                "Advanced product catalog with filtering and search",
+                "Secure payment gateway integration",
+                "Real-time inventory management",
+                "User authentication and profile management",
+                "Shopping cart and wishlist functionality",
+                "Order tracking and management system",
+                "Admin dashboard for product management",
+                "Responsive design for all devices"
+            ],
+            "images": [
+                { "icon": "bi-laptop", "color": "#0066ff" },
+                { "icon": "bi-cart", "color": "#00d4ff" },
+                { "icon": "bi-credit-card", "color": "#0066ff" },
+                { "icon": "bi-graph-up", "color": "#00d4ff" }
+            ],
+            "link": "#"
+        },
+        "2": {
+            "title": "Mobile Banking App",
+            "description": "A secure and intuitive mobile banking application that revolutionizes how users manage their finances. The app provides comprehensive banking features including account management, fund transfers, bill payments, investment tracking, and real-time transaction notifications. Built with security as the top priority.",
+            "techStack": ["React Native", "Firebase", "UI/UX", "Node.js", "MongoDB"],
+            "features": [
+                "Biometric authentication for secure access",
+                "Real-time account balance and transactions",
+                "Quick fund transfer between accounts",
+                "Bill payment and scheduling",
+                "Investment portfolio tracking",
+                "Transaction history and statements",
+                "Push notifications for account activity",
+                "24/7 customer support integration"
+            ],
+            "images": [
+                { "icon": "bi-phone", "color": "#0066ff" },
+                { "icon": "bi-shield-check", "color": "#00d4ff" },
+                { "icon": "bi-wallet2", "color": "#0066ff" },
+                { "icon": "bi-graph-up-arrow", "color": "#00d4ff" }
+            ],
+            "link": "#"
+        },
+        "3": {
+            "title": "Corporate Website",
+            "description": "A professional corporate website designed to showcase company services, values, and achievements. The website features a modern, clean design with comprehensive business solutions, team profiles, case studies, and integrated contact forms. Optimized for search engines and user engagement.",
+            "techStack": ["WordPress", "PHP", "CSS3", "JavaScript", "MySQL"],
+            "features": [
+                "Responsive design for all screen sizes",
+                "SEO optimized content and structure",
+                "Integrated contact and inquiry forms",
+                "Blog and news section",
+                "Service showcase with detailed pages",
+                "Team and company information",
+                "Case studies and testimonials",
+                "Multi-language support capability"
+            ],
+            "images": [
+                { "icon": "bi-briefcase", "color": "#0066ff" },
+                { "icon": "bi-building", "color": "#00d4ff" },
+                { "icon": "bi-people", "color": "#0066ff" },
+                { "icon": "bi-file-earmark-text", "color": "#00d4ff" }
+            ],
+            "link": "#"
+        },
+        "4": {
+            "title": "Analytics Dashboard",
+            "description": "A powerful real-time analytics dashboard that provides comprehensive insights into business performance. The dashboard features interactive data visualizations, customizable reports, trend analysis, and predictive analytics. Designed to help businesses make data-driven decisions.",
+            "techStack": ["Vue.js", "Python", "D3.js", "Chart.js", "PostgreSQL"],
+            "features": [
+                "Real-time data visualization",
+                "Customizable dashboard widgets",
+                "Interactive charts and graphs",
+                "Data export capabilities",
+                "Scheduled report generation",
+                "User role-based access control",
+                "API integration for multiple data sources",
+                "Mobile-responsive design"
+            ],
+            "images": [
+                { "icon": "bi-graph-up", "color": "#0066ff" },
+                { "icon": "bi-bar-chart", "color": "#00d4ff" },
+                { "icon": "bi-pie-chart", "color": "#0066ff" },
+                { "icon": "bi-speedometer2", "color": "#00d4ff" }
+            ],
+            "link": "#"
+        },
+        "5": {
+            "title": "Restaurant Management System",
+            "description": "A complete restaurant management solution that streamlines operations from ordering to inventory management. The system includes table management, online ordering, kitchen display system, inventory tracking, staff management, and comprehensive analytics to optimize restaurant operations.",
+            "techStack": ["Angular", "Express", "PostgreSQL", "Node.js", "Socket.io"],
+            "features": [
+                "Table reservation and management",
+                "Online ordering system",
+                "Kitchen display system (KDS)",
+                "Inventory and stock management",
+                "Staff scheduling and management",
+                "Sales and revenue analytics",
+                "Customer loyalty program",
+                "Multi-location support"
+            ],
+            "images": [
+                { "icon": "bi-shop", "color": "#0066ff" },
+                { "icon": "bi-cup-hot", "color": "#00d4ff" },
+                { "icon": "bi-receipt", "color": "#0066ff" },
+                { "icon": "bi-clipboard-data", "color": "#00d4ff" }
+            ],
+            "link": "#"
+        },
+        "6": {
+            "title": "Cloud Migration Project",
+            "description": "A comprehensive enterprise cloud migration initiative that successfully migrated legacy systems to modern cloud infrastructure. The project improved scalability, performance, and cost-efficiency while maintaining zero downtime. Implemented using industry best practices for security and compliance.",
+            "techStack": ["AWS", "Docker", "Kubernetes", "Terraform", "CI/CD"],
+            "features": [
+                "Zero-downtime migration strategy",
+                "Containerized application deployment",
+                "Auto-scaling infrastructure",
+                "Disaster recovery and backup solutions",
+                "Security and compliance implementation",
+                "Performance monitoring and optimization",
+                "Cost optimization strategies",
+                "24/7 infrastructure monitoring"
+            ],
+            "images": [
+                { "icon": "bi-cloud", "color": "#0066ff" },
+                { "icon": "bi-server", "color": "#00d4ff" },
+                { "icon": "bi-shield-lock", "color": "#0066ff" },
+                { "icon": "bi-arrow-repeat", "color": "#00d4ff" }
+            ],
+            "link": "#"
+        }
+    }
+}
