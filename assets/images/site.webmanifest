@@ -1,0 +1,16 @@
+{
+  "name": "Zenvixa Technology",
+  "short_name": "Zenvixa",
+  "description": "Professional IT services company offering Web Design, Web Development, UI/UX Design, IT Consulting, and Graphic Design.",
+  "icons": [
+    {
+      "src": "Logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0066ff"
+}
