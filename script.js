@@ -160,6 +160,167 @@ formFields.forEach(field => {
     });
 });
 
+// ============================================
+// Strict Phone Validation
+// ============================================
+function validatePhoneStrict(phone) {
+    // Remove all non-digit characters first
+    const cleanPhone = phone.replace(/\D/g, '');
+    
+    // Must be exactly 10 digits
+    if (cleanPhone.length !== 10) {
+        return { valid: false, message: 'Phone number must be exactly 10 digits.' };
+    }
+    
+    // Must start with 6, 7, 8, or 9
+    if (!['6', '7', '8', '9'].includes(cleanPhone[0])) {
+        return { valid: false, message: 'Phone number must start with 6, 7, 8, or 9.' };
+    }
+    
+    // Check if original input contains only numbers (no spaces, +, -, etc.)
+    if (!/^\d+$/.test(phone)) {
+        return { valid: false, message: 'Only numbers are allowed in phone number.' };
+    }
+    
+    return { valid: true, message: '' };
+}
+
+// Show phone field error
+function showPhoneError(message) {
+    const phoneField = document.getElementById('phone');
+    const phoneGroup = phoneField.closest('.mb-3');
+    
+    // Remove existing error
+    const existingError = phoneGroup.querySelector('.phone-error');
+    if (existingError) {
+        existingError.remove();
+    }
+    
+    // Add error styling and message
+    phoneField.classList.add('is-invalid');
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'phone-error text-danger small mt-1';
+    errorDiv.textContent = message;
+    phoneGroup.appendChild(errorDiv);
+}
+
+// Clear phone field error
+function clearPhoneError() {
+    const phoneField = document.getElementById('phone');
+    const phoneGroup = phoneField.closest('.mb-3');
+    
+    phoneField.classList.remove('is-invalid');
+    const existingError = phoneGroup.querySelector('.phone-error');
+    if (existingError) {
+        existingError.remove();
+    }
+}
+
+// Live phone validation
+document.getElementById('phone').addEventListener('input', function() {
+    const phone = this.value.trim();
+    
+    if (phone === '') {
+        clearPhoneError();
+        return;
+    }
+    
+    const validation = validatePhoneStrict(phone);
+    if (!validation.valid) {
+        showPhoneError(validation.message);
+    } else {
+        clearPhoneError();
+    }
+});
+
+// ============================================
+// Strict Email Validation
+// ============================================
+const disposableDomains = [
+    '10minutemail.com', 'tempmail.org', 'guerrillamail.com', 'mailinator.com',
+    'yopmail.com', 'throwaway.email', 'temp-mail.org', 'maildrop.cc',
+    'tempmailaddress.com', 'mytemp.email', 'fakeemail.com', 'tempmail.org',
+    '10minutemail.org', 'tempmail.org', 'mailinator.org', 'yopmail.net',
+    'guerrillamail.net', 'throwaway.email', 'temp-mail.org', 'maildrop.cc',
+    'tempmailaddress.com', 'mytemp.email', 'fakeemail.com', 'tempmail.org'
+];
+
+function validateEmailStrict(email) {
+    // Strict email regex pattern
+    const strictEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    
+    // Basic format validation
+    if (!strictEmailRegex.test(email)) {
+        return { valid: false, message: 'Please enter a valid email address format.' };
+    }
+    
+    // Check for disposable email domains
+    const domain = email.split('@')[1].toLowerCase();
+    if (disposableDomains.includes(domain)) {
+        return { valid: false, message: 'Disposable email addresses are not allowed. Please use a permanent email address.' };
+    }
+    
+    // Additional checks
+    if (email.length > 254) {
+        return { valid: false, message: 'Email address is too long.' };
+    }
+    
+    const localPart = email.split('@')[0];
+    if (localPart.length > 64) {
+        return { valid: false, message: 'Email username is too long.' };
+    }
+    
+    return { valid: true, message: '' };
+}
+
+// Show email field error
+function showEmailError(message) {
+    const emailField = document.getElementById('email');
+    const emailGroup = emailField.closest('.mb-3');
+    
+    // Remove existing error
+    const existingError = emailGroup.querySelector('.email-error');
+    if (existingError) {
+        existingError.remove();
+    }
+    
+    // Add error styling and message
+    emailField.classList.add('is-invalid');
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'email-error text-danger small mt-1';
+    errorDiv.textContent = message;
+    emailGroup.appendChild(errorDiv);
+}
+
+// Clear email field error
+function clearEmailError() {
+    const emailField = document.getElementById('email');
+    const emailGroup = emailField.closest('.mb-3');
+    
+    emailField.classList.remove('is-invalid');
+    const existingError = emailGroup.querySelector('.email-error');
+    if (existingError) {
+        existingError.remove();
+    }
+}
+
+// Live email validation
+document.getElementById('email').addEventListener('input', function() {
+    const email = this.value.trim();
+    
+    if (email === '') {
+        clearEmailError();
+        return;
+    }
+    
+    const validation = validateEmailStrict(email);
+    if (!validation.valid) {
+        showEmailError(validation.message);
+    } else {
+        clearEmailError();
+    }
+});
+
 // Show alert message
 function showAlert(message, type = 'success') {
     formAlert.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show`;
@@ -197,8 +358,10 @@ function setLoadingState(isLoading) {
 contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
-    // Hide previous alerts
+    // Hide previous alerts and clear errors
     formAlert.classList.add('d-none');
+    clearEmailError();
+    clearPhoneError();
     
     // Get form values
     const name = document.getElementById('name').value.trim();
@@ -212,18 +375,20 @@ contactForm.addEventListener('submit', function(e) {
         return;
     }
     
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        showAlert('Please enter a valid email address.', 'error');
+    // Strict email validation
+    const emailValidation = validateEmailStrict(email);
+    if (!emailValidation.valid) {
+        showEmailError(emailValidation.message);
+        showAlert(emailValidation.message, 'error');
         return;
     }
     
-    // Phone validation (if provided)
+    // Strict phone validation (if provided)
     if (phone) {
-        const phoneRegex = /^[\d\s\-\+\(\)]+$/;
-        if (!phoneRegex.test(phone) || phone.length < 10) {
-            showAlert('Please enter a valid phone number.', 'error');
+        const phoneValidation = validatePhoneStrict(phone);
+        if (!phoneValidation.valid) {
+            showPhoneError(phoneValidation.message);
+            showAlert(phoneValidation.message, 'error');
             return;
         }
     }
@@ -399,8 +564,3 @@ if (projectModal) {
     });
 }
 */
-
-// Console message for developers
-console.log('%c🚀 Zenvinix Tech - IT Services Company', 'color: #0066ff; font-size: 20px; font-weight: bold;');
-console.log('%cWebsite built with modern technologies and best practices.', 'color: #666; font-size: 12px;');
-
