@@ -161,6 +161,99 @@ formFields.forEach(field => {
 });
 
 // ============================================
+// Message Validation
+// ============================================
+function validateMessage(message) {
+    // Remove extra whitespace and convert to lowercase for checking
+    const cleanMessage = message.trim().toLowerCase();
+    
+    // List of generic/invalid messages to block
+    const invalidMessages = [
+        'hi', 'hello', 'hey', 'helo', 'hii', 'hiii', 'hiiii',
+        'hai', 'hay', 'heyy', 'heyyy', 'hi there', 'hello there',
+        'greetings', 'good morning', 'good evening', 'good afternoon',
+        'yo', 'sup', 'what\'s up', 'whats up', 'wassup', 'wasup',
+        'test', 'testing', 'test message', 'demo', 'sample',
+        'ok', 'okay', 'okk', 'okkk', 'alright', 'alright',
+        'thanks', 'thank you', 'ty', 'thx', 'thanx',
+        'bye', 'goodbye', 'see you', 'cya', 'laters',
+        'yes', 'no', 'maybe', 'sure', 'fine', 'cool', 'nice',
+        'help', 'help me', 'urgent', 'asap', 'contact me',
+        'call me', 'email me', 'reply', 'respond'
+    ];
+    
+    // Check if message is exactly one of the invalid messages
+    if (invalidMessages.includes(cleanMessage)) {
+        return { valid: false, message: 'Please provide a more detailed message. Generic greetings like "hi" or "hello" are not sufficient.' };
+    }
+    
+    // Check minimum length (at least 10 characters)
+    if (cleanMessage.length < 10) {
+        return { valid: false, message: 'Message must be at least 10 characters long. Please provide more details about your inquiry.' };
+    }
+    
+    // Check if message contains only repetitive characters
+    if (/^([a-zA-Z])\1+$/.test(cleanMessage.replace(/\s/g, ''))) {
+        return { valid: false, message: 'Please provide a meaningful message instead of repetitive characters.' };
+    }
+    
+    // Check if message is just numbers or symbols
+    if (/^[\d\s\W]+$/.test(cleanMessage)) {
+        return { valid: false, message: 'Message must contain meaningful text. Please describe your inquiry in words.' };
+    }
+    
+    return { valid: true, message: '' };
+}
+
+// Show message field error
+function showMessageError(message) {
+    const messageField = document.getElementById('message');
+    const messageGroup = messageField.closest('.mb-3');
+    
+    // Remove existing error
+    const existingError = messageGroup.querySelector('.message-error');
+    if (existingError) {
+        existingError.remove();
+    }
+    
+    // Add error styling and message
+    messageField.classList.add('is-invalid');
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'message-error text-danger small mt-1';
+    errorDiv.textContent = message;
+    messageGroup.appendChild(errorDiv);
+}
+
+// Clear message field error
+function clearMessageError() {
+    const messageField = document.getElementById('message');
+    const messageGroup = messageField.closest('.mb-3');
+    
+    messageField.classList.remove('is-invalid');
+    const existingError = messageGroup.querySelector('.message-error');
+    if (existingError) {
+        existingError.remove();
+    }
+}
+
+// Live message validation
+document.getElementById('message').addEventListener('input', function() {
+    const message = this.value.trim();
+    
+    if (message === '') {
+        clearMessageError();
+        return;
+    }
+    
+    const validation = validateMessage(message);
+    if (!validation.valid) {
+        showMessageError(validation.message);
+    } else {
+        clearMessageError();
+    }
+});
+
+// ============================================
 // Strict Phone Validation
 // ============================================
 function validatePhoneStrict(phone) {
@@ -362,6 +455,7 @@ contactForm.addEventListener('submit', function(e) {
     formAlert.classList.add('d-none');
     clearEmailError();
     clearPhoneError();
+    clearMessageError();
     
     // Get form values
     const name = document.getElementById('name').value.trim();
@@ -391,6 +485,14 @@ contactForm.addEventListener('submit', function(e) {
             showAlert(phoneValidation.message, 'error');
             return;
         }
+    }
+    
+    // Message validation
+    const messageValidation = validateMessage(message);
+    if (!messageValidation.valid) {
+        showMessageError(messageValidation.message);
+        showAlert(messageValidation.message, 'error');
+        return;
     }
     
     // Set loading state
