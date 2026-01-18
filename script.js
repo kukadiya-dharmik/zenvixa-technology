@@ -254,79 +254,6 @@ document.getElementById('message').addEventListener('input', function() {
 });
 
 // ============================================
-// Strict Phone Validation
-// ============================================
-function validatePhoneStrict(phone) {
-    // Remove all non-digit characters first
-    const cleanPhone = phone.replace(/\D/g, '');
-    
-    // Must be exactly 10 digits
-    if (cleanPhone.length !== 10) {
-        return { valid: false, message: 'Phone number must be exactly 10 digits.' };
-    }
-    
-    // Must start with 6, 7, 8, or 9
-    if (!['6', '7', '8', '9'].includes(cleanPhone[0])) {
-        return { valid: false, message: 'Phone number must start with 6, 7, 8, or 9.' };
-    }
-    
-    // Check if original input contains only numbers (no spaces, +, -, etc.)
-    if (!/^\d+$/.test(phone)) {
-        return { valid: false, message: 'Only numbers are allowed in phone number.' };
-    }
-    
-    return { valid: true, message: '' };
-}
-
-// Show phone field error
-function showPhoneError(message) {
-    const phoneField = document.getElementById('phone');
-    const phoneGroup = phoneField.closest('.mb-3');
-    
-    // Remove existing error
-    const existingError = phoneGroup.querySelector('.phone-error');
-    if (existingError) {
-        existingError.remove();
-    }
-    
-    // Add error styling and message
-    phoneField.classList.add('is-invalid');
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'phone-error text-danger small mt-1';
-    errorDiv.textContent = message;
-    phoneGroup.appendChild(errorDiv);
-}
-
-// Clear phone field error
-function clearPhoneError() {
-    const phoneField = document.getElementById('phone');
-    const phoneGroup = phoneField.closest('.mb-3');
-    
-    phoneField.classList.remove('is-invalid');
-    const existingError = phoneGroup.querySelector('.phone-error');
-    if (existingError) {
-        existingError.remove();
-    }
-}
-
-// Live phone validation
-document.getElementById('phone').addEventListener('input', function() {
-    const phone = this.value.trim();
-    
-    if (phone === '') {
-        clearPhoneError();
-        return;
-    }
-    
-    const validation = validatePhoneStrict(phone);
-    if (!validation.valid) {
-        showPhoneError(validation.message);
-    } else {
-        clearPhoneError();
-    }
-});
-
-// ============================================
 // Strict Email Validation
 // ============================================
 const disposableDomains = [
@@ -454,13 +381,11 @@ contactForm.addEventListener('submit', function(e) {
     // Hide previous alerts and clear errors
     formAlert.classList.add('d-none');
     clearEmailError();
-    clearPhoneError();
     clearMessageError();
     
     // Get form values
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('phone').value.trim();
     const message = document.getElementById('message').value.trim();
     
     // Basic validation
@@ -475,16 +400,6 @@ contactForm.addEventListener('submit', function(e) {
         showEmailError(emailValidation.message);
         showAlert(emailValidation.message, 'error');
         return;
-    }
-    
-    // Strict phone validation (if provided)
-    if (phone) {
-        const phoneValidation = validatePhoneStrict(phone);
-        if (!phoneValidation.valid) {
-            showPhoneError(phoneValidation.message);
-            showAlert(phoneValidation.message, 'error');
-            return;
-        }
     }
     
     // Message validation
@@ -502,7 +417,6 @@ contactForm.addEventListener('submit', function(e) {
     const templateParams = {
         from_name: name,
         from_email: email,
-        phone: phone || 'Not provided',
         message: message,
         to_email: 'zenvixatechnology@gmail.com', // Your business email
         reply_to: email
